@@ -10,4 +10,8 @@ echo ""
 
 fi
 
-echo "Peasant!"
+echo ""
+
+# Man måste veta vilka de första 3 oktetterna är i ens IP-adress range.
+my_ip=$(ip route get 8.8.8.8 | grep -oP 'src \K[^ ]+') # Variabel som sparar IP-nätverket man är på som går ut mot internet.
+echo $my_ip
