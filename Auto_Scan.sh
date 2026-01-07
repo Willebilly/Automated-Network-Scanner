@@ -49,17 +49,3 @@ nmap -T5 --min-rate 5000 "$line" 													# Använder nmap för att skanna I
 
 echo ""
 done < IP-list.txt # Visar att den ska hämta från IP-list.txt
-
-
-## Varför jag jag la till set -euo pipefail: 
-#För att göra scriptet robust och säkrare, så att fel inte passeras tyst. Det minskar risken för oförutsägbart beteende vid nätverksskanning.
-
-## Förbättring 1: Flytt av wait:
-#Jag flyttade kommandot wait från slutet av while read-loopen till direkt efter ping-sweepen.
-# Detta säkerställer att alla ping-kommandon är klara innan vi börjar skanna med nmap, vilket förhindrar potentiella konflikter och förbättrar prestandan.
-# När wait låg inne i while-loopen väntade scriptet vid fel tillfälle, vilket kunde leda till att portskanning startade innan alla IP-adresser hade hittats.
-
-## Förbättring 2: säkerhets- och samtyckesvarning
-# Jag lade till en säkerhets- och samtyckesvarning som visas innan nätverksskanningen startar.
-# Användaren måste aktivt bekräfta att skanningen endast utförs på ett nätverk som man äger eller har tillstånd att testa.
-# Om användaren inte godkänner detta avbryts scriptet direkt.
