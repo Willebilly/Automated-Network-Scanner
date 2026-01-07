@@ -13,7 +13,6 @@ if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
   exit 0
 fi
 
-
 # Följande körs ifall man inte har en text fil som heter IP-list
 if [ ! -f IP-list.txt ]; then
 echo "ERROR: IP-list.txt är ej installerad."
@@ -38,7 +37,7 @@ oct="${my_ip%${my_ip##*.}}" 														# Tar bart den sista oktetten.
 for ip in $(seq 1 254); do  														# Gör en Ping sweep från .1 - .254
 ping -c 1 $oct$ip | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" >> IP-list.txt & 	# Själva sweepen, men också sparar i IP-list.txt
 done
-wait # Väntar tills alla ping-kommandon är klara innan den går vidare.
+wait 																				# Väntar tills alla ping-kommandon är klara innan den går vidare.
 echo "IPv4 har sparats i IP-list.txt"
 echo ""
 
