@@ -1,40 +1,32 @@
-# 2026-01-07
+# Automated Network Scanner v1.2
 
-Har mergat ihop Main koden till dev för att kunna fortsätta arbeta på den där. Det som lagts till är några förbättringar som Sauda gjort. Som att set -eu pipefall som gör scriptet robust och säkrare, så att fel inte passeras tyst. Det minskar risken för oförutsägbart beteende vid nätverksskanning. Sauda fixade också till en säkerhets- och samtyckesvarning som visas innan nätverksskanningen startar.
+## Syfte/Mål
+Detta projekt syftar till att skapa ett script som automatiskt scannar aktiva enheter i användarens nätverk. 
+Mer specifikt det nätverk som ger åtkomst till internet. Därefter ska programmet visa vilka tcp-portar dessa enheter inklusive användaren har öppna. Programmet är skrivet i bash.
 
+## Funktion
+Scriptet visar följande information:
+* Din IPv4 address
+* Enheter i samma nätverk och deras IPv4 address
+* TCP portar som är öppna hos enheterna inklusive dig
+> INFO:
+> En .txt fil kommer att skapas i samma mapp, den kommer att användas av koden.
 
-# 2025-12-17
+## Systemkrav
+Programmet är endast **körbart i _Linux_ miljöer**. Ex: Ubuntu, Debian, Kali Linux.
 
-Jag snyggade till koden lite, planerar för att ha ännu en fil som ska köras innan denna. En python fil som ska se vad användaren har för OperativSystem eftersom Windows inte har åtkomst till bash. Jag utgår från att de som är ute GitHub vet och har python nedladdat. 
-Jag har lagt till en if sats som ska leta efter filen nmap. Om den inte finns kommer programmet att ladda ner det.
+Scriptet kontrollerar automatiskt användarens privilegier innan den startar.
 
+## Instruktioner för körning
+1. Ladda ned filen Auto_Scan.sh i en mapp i din Linux miljö. 
+2. ! Gå in på mappen i Linux terminal. !
+3. Skriv i terminalen: chmod +x Auto_Scan.sh 
+4. För att köra programmet skriv i terminalen: sudo bash Auto_Scan.sh
+5. Godkänn att det är ok att köra programmet i ditt nuvarande nätverk.
 
-# 2025-12-16
+## Screenshot
+När allt fungerar bör du få följande resultat!
+<img width="646" height="726" alt="Testkörning av kod" src="https://github.com/user-attachments/assets/9961a80e-ea22-4244-8161-646c78d624c9" />
 
-
-Nu sparas användarens lokala IP adress i en variabel. Koden får fram IP genom den IP-route som går ut mot googles 8.8.8.8 adress, därefter tittar den på source IPv4-adressen som togs för att kunna nå dit. Jag planerar för att ta de första 3 oktetterna ur denna för att användas när ping sweep genomförs.
-
-
-Syftet med denna feature är att spara tid och göra så mycket som möjligt utan någon extra input från användaren.
-
-
-Därefter delade jag upp IPv4 adressen så att nätverksdelen sparas i variabeln my_ip.
-
-
-Använde mig av en for loop som både utför Ping sweep och sparar resultatet i IP-list.txt. Med hjälp av Ping sweep kan vi se vilka andra enheter som är med på nätverket användaren är uppkopplad till.
-
-
-Senare i projektet kommer informationen i IP-list.txt att användas för en TCP-portscan.
-
-
-Programet använder sig nu av nmap för att skanna IPv4 adresserna efter öppna TCP-portar.
-
-
-# 2025-12-15
-
-
-Jag har skrivit en bit med kod som körs ifall IP-list.txt inte redan finns
-på dator. Denna kommer användas senare i min kod som ska samla alla
-IP-adresser som används av enheter på det nätverk användaren är uppkopplad
-på.
-
+## Flowschart
+![Automated-Network-Scanner Flowschart image](https://github.com/user-attachments/assets/9493b9a5-f870-4647-8dc2-47120e7137b2)
