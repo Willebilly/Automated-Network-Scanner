@@ -14,9 +14,6 @@ if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
 fi
 
 
-# Diverse funktioner som var nödvändiga för koden.
-
-
 # Följande körs ifall man inte har en text fil som heter IP-list
 if [ ! -f IP-list.txt ]; then
 echo "ERROR: IP-list.txt är ej installerad."
