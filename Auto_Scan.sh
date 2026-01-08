@@ -5,6 +5,11 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
+if ! ping -c1 www.google.com >/dev/null 2>&1 ; then
+  echo "Ingen internet uppkoppling"
+  exit 1
+fi
+
 echo "VARNING: Kör endast detta script på nätverk du äger eller har tillstånd att testa."
 read -r -p "Fortsätt? (y/n): " answer
 
@@ -13,33 +18,33 @@ if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
   exit 0
 fi
 
+
 # Funktionen tar bort IP-list.txt när scriptet avslutas eller om något gick snett.
 end_func() {
-if [ $? -eq 0 ]; then 	# Script fungerar och avslutades normalt!
-rm IP-list.txt
-else 					# Script kraschar
-echo "Något gick snett!"
+if [ $? -eq 0 ]; then 																# Script fungerar och avslutades normalt!
+  rm IP-list.txt
+else 																				# Script kraschar
+  echo "Något gick snett!"
+  rm IP-list.txt
 fi
 }
+trap end_func EXIT						 											# När koden avslutas eller om något går fel körs funktionen
 
-trap end_func EXIT # När koden avslutas eller något går fel körs funktionen
 
 # Följande körs ifall man inte har en text fil som heter IP-list
 if [ ! -f IP-list.txt ]; then
-touch IP-list.txt 																	# Skapar listan som kommer att innehålla våra grann-enheters IP-adresser.
+  touch IP-list.txt 																# Skapar listan som kommer att innehålla våra grann-enheters IP-adresser.
 else
-> IP-list.txt 																		# Om listan redan finns, på något sätt, töms den för användning
+  > IP-list.txt 																	# Om listan redan finns, på något sätt, töms den för användning
 fi
 
+
 if [ ! -f /usr/bin/nmap ]; then 													# Om nmap är ej installerad kommer den att bli det här
-echo "ERROR: nmap är ej installerad."
-echo "Installerar: nmap"
-sudo apt update && sudo apt install nmap 											# Installerar nmap
-echo "nmap installerad."
+  sudo apt update && sudo apt install nmap 											# Installerar nmap
 fi
 
 																					# Man måste veta vilka de första 3 oktetterna är i ens IP-adress range.
-my_ip=$(ip route get 8.8.8.8 | grep -oP 'src \K[^ ]+') 								# Variabel som sparar IP-nätverket man är på som går ut mot internet.
+my_ip=$(ip route get 8.8.8.8 | grep -oP 'src \K[^ ]+') 								# Variabel som sparar IP-nätverket man är på som går ut mot internet. Pingar Google.
 echo "Din IPv4 adress: $my_ip"
 oct="${my_ip%${my_ip##*.}}" 														# Tar bart den sista oktetten.
 for ip in $(seq 1 254); do  														# Gör en Ping sweep från .1 - .254
@@ -50,10 +55,9 @@ echo ""
 echo "=================================================="
 echo ""
 
+
 while IFS= read -r line; do 														# While loop för att kunna skanna porten för varje IPv4 adress i listan.
 echo "Processing line: $line"
 nmap -T5 --min-rate 5000 "$line" 													# Använder nmap för att skanna IPv4 TCP port.
-
-
 echo ""
 done < IP-list.txt # Visar att den ska hämta från IP-list.txt
