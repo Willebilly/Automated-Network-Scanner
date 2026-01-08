@@ -13,15 +13,22 @@ if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
   exit 0
 fi
 
+# Funktionen tar bort IP-list.txt när scriptet avslutas eller om något gick snett.
+end_func() {
+if [ $? -eq 0 ]; then 	# Script fungerar och avslutades normalt!
+rm IP-list.txt
+else 					# Script kraschar
+echo "Något gick snett!"
+fi
+}
+
+trap end_func EXIT # När koden avslutas eller något går fel körs funktionen
 
 # Följande körs ifall man inte har en text fil som heter IP-list
 if [ ! -f IP-list.txt ]; then
-echo "ERROR: IP-list.txt är ej installerad."
-echo "Installerar: IP-list.txt"
 touch IP-list.txt 																	# Skapar listan som kommer att innehålla våra grann-enheters IP-adresser.
-echo "IP-list.txt installerad."
 else
-> IP-list.txt 																		# Om listan redan finns töms den för användning
+> IP-list.txt 																		# Om listan redan finns, på något sätt, töms den för användning
 fi
 
 if [ ! -f /usr/bin/nmap ]; then 													# Om nmap är ej installerad kommer den att bli det här
@@ -39,7 +46,8 @@ for ip in $(seq 1 254); do  														# Gör en Ping sweep från .1 - .254
 ping -c 1 $oct$ip | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" >> IP-list.txt & 	# Själva sweepen, men också sparar i IP-list.txt
 done
 wait # Väntar tills alla ping-kommandon är klara innan den går vidare.
-echo "IPv4 har sparats i IP-list.txt"
+echo ""
+echo "=================================================="
 echo ""
 
 while IFS= read -r line; do 														# While loop för att kunna skanna porten för varje IPv4 adress i listan.
