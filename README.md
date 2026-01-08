@@ -29,4 +29,4 @@ När allt fungerar bör du få följande resultat!
 <img width="646" height="726" alt="Testkörning av kod" src="https://github.com/user-attachments/assets/9961a80e-ea22-4244-8161-646c78d624c9" />
 
 ## Flowschart
-![Automated-Network-Scanner Flowschart image](https://github.com/user-attachments/assets/9493b9a5-f870-4647-8dc2-47120e7137b2)
+![Automated-Network-Scanner Flowschart image](https://github.com/user-attachments/assets/0bebcd16-7b60-432f-818b-f3f775736122)
