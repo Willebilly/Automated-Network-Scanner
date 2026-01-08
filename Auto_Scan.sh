@@ -2,11 +2,13 @@
 set -euo pipefail
 if [ "$EUID" -ne 0 ]; then
   echo "Kör scriptet med sudo: sudo bash Auto_Scan.sh"
+  echo "Program avslutas."
   exit 1
 fi
 
 if ! ping -c1 www.google.com >/dev/null 2>&1 ; then
   echo "Ingen internet uppkoppling"
+  echo "Program avslutas."
   exit 1
 fi
 
