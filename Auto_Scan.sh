@@ -5,7 +5,7 @@
 # ===========================================================
 
 set -euo pipefail
-VERSION="1.9.7" # Ändra på denna vid varje förändring innan commit!!!!!!!!!
+VERSION="2.0" # Ändra på denna vid varje förändring innan commit!!!!!!!!!
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG_FILE_PATH="$SCRIPT_DIR/L0G.txt"
 LOG_LIST=()
