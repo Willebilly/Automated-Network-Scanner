@@ -33,5 +33,5 @@ När allt fungerar bör du få följande resultat!
 
 <img width="637" height="759" alt="Skärmbild 2026-01-09 152831" src="https://github.com/user-attachments/assets/9e027fc6-b91e-4273-996c-1b5ca126eae7" />
 
-## Flowschart
+## Flowschart :)
 ![Automated-Network-Scanner Flowschart image](https://github.com/user-attachments/assets/e1f376d3-007a-4c30-861e-1f7135d5e04b)
