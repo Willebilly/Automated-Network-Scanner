@@ -178,7 +178,7 @@ IP_range_calc() {
 	log_func "DEBUG" "Calculating IPv4 address range"
 	# Man måste veta vilka de första 3 oktetterna är i ens IP-adress range.
 	my_ip=$(ip route get 8.8.8.8 | grep -oP 'src \K[^ ]+') 								# Variabel som sparar IP-nätverket man är på som går ut mot internet. Pingar Google.
-	echo "Din IPv4 adress: $my_ip"
+	echo "Din IPv4 address: $my_ip"
 	oct="${my_ip%${my_ip##*.}}" 														# Tar bart den sista oktetten.
 	log_func "INFO" "Calculated IPv4 address range"
 }
