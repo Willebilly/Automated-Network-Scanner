@@ -5,7 +5,7 @@
 # ===========================================================
 
 set -euo pipefail
-VERSION="1.9" # Ändra på denna vid varje förändring innan commit!!!!!!!!!
+VERSION="1.9.5" # Ändra på denna vid varje förändring innan commit!!!!!!!!!
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG_FILE_PATH="$SCRIPT_DIR/L0G.txt"
 LOG_LIST=()
@@ -63,7 +63,6 @@ rot_or_nah() {
 	if [ "$EUID" -ne 0 ]; then # Vad har programmet för behörighet?
 	  log_func "ERROR" "Program was not run as root"
 	  echo "Kör scriptet med sudo: sudo bash Auto_Scan.sh"
-	  echo "Program avslutas."
 	  exit 1
 	fi
 	log_func "INFO" "Program run as root"
@@ -76,7 +75,6 @@ net_con() {
 	  log_func "ERROR" "No internet connection"
 	  echo "Ingen internet uppkoppling"
 	  echo "Se över din internet uppkoppling. Har du fått en ip adress?"
-	  echo "Program avslutas."
 	  exit 1
 	fi
 	log_func "INFO" "PINGED www.google.com successfully"
@@ -101,17 +99,23 @@ user_warning() {
 
 # Funktionen tar bort IP-list.txt när scriptet avslutas eller om något gick snett.
 end_func() {
-	if [ $? -eq 0 ]; then # Script fungerar och avslutades normalt!
+	if [ -f IP-list.txt ]; then # Om listan hittas tas den bort.
 	  rm IP-list.txt
 	  log_func "INFO" "Deleted IP-list.txt"
-	  log_func "INFO" "Program shutting down"
-	  writer_to_L0G
-	else # Script kraschar, detta är en FATAL
-	  echo "Något gick snett!"
-	  rm IP-list.txt
-	  log_func "INFO" "Deleted IP-list.txt"
-	  log_func "FATAL" "Program shutting down"
-	  writer_to_L0G
+	fi
+	if [ "$EUID" == 0 ]; then # Om man kör skriptet som root.
+	  if [ $? -eq 0 ]; then # Script fungerar och avslutades normalt!
+	    echo ""
+	    echo "PROGRAM AVSLUTAS."
+	    log_func "INFO" "Program shutting down"
+	    writer_to_L0G
+	  else # Script kraschar, detta är en FATAL
+	    echo "Något gick snett!"
+	    log_func "FATAL" "Program shutting down"
+	    writer_to_L0G
+	  fi
+	else
+	  echo "Program Avslutas."
 	fi
 }
 
@@ -132,10 +136,10 @@ log_func() { # Logg funktionen som kommer spara händelser och fel meddelanden i
 	# Log Levels: DEBUG, INFO, WARN, ERROR, FATAL
 	local log_level=$1 # Representerar Log Level
 	local message=$2 # Meddelandet som kommer dyka upp om vad som hände. 
-	local epoch=$(date +%s) # Antalet sekunder som är lättare att sortera senare. Kommer att tas bort senare.
+	local epoch_ns=$(date +%s%N) # Antalet nano sekunder som gör det lättare att sortera senare. Kommer att tas bort också senare.
 	local human_time=$(date +"%Y-%m-%d %H:%M:%S") # Datumet och tiden som detta inträffade.
 	
-	LOG_LIST+=("$epoch|$human_time [$log_level] $message") # Lägger till i array LOG_LIST.
+	LOG_LIST+=("$epoch_ns|$human_time [$log_level] $message") # Lägger till i array LOG_LIST.
 }
 
 writer_to_L0G() { # Funktionen som sorterar och skriver ner allt i L0G.txt.
@@ -219,7 +223,6 @@ main() { # Här kör koden JIPPIE!!!
   IP_range_calc
   ping_sweep
   port_scan
-  log_func
 }
 
 main "$@"
