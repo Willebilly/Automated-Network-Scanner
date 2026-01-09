@@ -1,4 +1,4 @@
-# Automated Network Scanner v1.9.6
+# Automated Network Scanner v1.9.7
 
 ## Syfte/Mål
 Detta projekt syftar till att skapa ett skript som automatiskt scannar aktiva enheter i användarens nätverk. 
@@ -10,7 +10,9 @@ Skriptet visar följande information:
 * Enheter i samma nätverk och deras IPv4 address
 * TCP portar som är öppna hos enheterna inklusive dig
 > INFO:
+
 > En .txt fil kommer att skapas i samma mapp, den kommer att användas av koden.
+
 > En log fil, [ L0G.txt ] kommer att skapas i samma mapp, där kan du se vad som har hänt och hur skriptet har jobbat.
 
 ## Systemkrav
@@ -28,7 +30,8 @@ Skriptet kontrollerar automatiskt användarens internet uppkoppling innan progra
 
 ## Screenshot
 När allt fungerar bör du få följande resultat!
-<img width="646" height="726" alt="Testkörning av kod" src="https://github.com/user-attachments/assets/9961a80e-ea22-4244-8161-646c78d624c9" />
+
+<img width="637" height="759" alt="Skärmbild 2026-01-09 152831" src="https://github.com/user-attachments/assets/9e027fc6-b91e-4273-996c-1b5ca126eae7" />
 
 ## Flowschart
 ![Automated-Network-Scanner Flowschart image](https://github.com/user-attachments/assets/e1f376d3-007a-4c30-861e-1f7135d5e04b)
