@@ -21,6 +21,12 @@ Usage: sudo bash Auto_Scan.sh [OPTIONS]
 Options:
   -h, --help        Visar detta hjälp meddelande
   -v, --version     Visar vilken version av programmet du använder + lite extra info :)
+Info:
+Om du vill rensa log filen L0G.txt eller ta bort den. Skriv: rm L0G.txt i terminalen.
+Sedan skriv in "y" eller "Y" och klicka sedan på "enter".
+
+If you want to clear the log file L0G.txt you can simply remove it by typing; rm L0G.txt 
+in the terminal. Then press "y" or "Y" and the press "enter".
 EOF
 }
 
