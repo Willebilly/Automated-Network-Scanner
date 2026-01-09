@@ -1,4 +1,4 @@
-# Automated Network Scanner v1.9.7
+# Automated Network Scanner v2.0
 
 ## Syfte/Mål
 Detta projekt syftar till att skapa ett skript som automatiskt scannar aktiva enheter i användarens nätverk. 
