@@ -33,7 +33,7 @@ show_version() {
 # ===========================================================
 
 flag_arg() {
-for arg in "$@"; do # lägger till några flaggor här
+for arg in "$@"; do # lägger till några argument här
     case "$arg" in
         -h|--help)
             show_help
@@ -157,10 +157,10 @@ IP_list_maker() {
 # Följande körs ifall man inte har en text fil som heter IP-list
 	if [ ! -f IP-list.txt ]; then
 	  touch IP-list.txt
-	  log_func "INFO" "IP-list.txt was created." 																	# Skapar listan som kommer att innehålla våra grann-enheters IP-adresser.
+	  log_func "INFO" "IP-list.txt was created." 										# Skapar listan som kommer att innehålla våra grann-enheters IP-adresser.
 	elif [ -f IP-list.txt ]; then
 	  > IP-list.txt
-	  log_func "INFO" "IP-list.txt was cleared." 																		# Om listan redan finns, på något sätt, töms den för användning
+	  log_func "INFO" "IP-list.txt was cleared." 										# Om listan redan finns, på något sätt, töms den för användning
 	else
 	  log_func "ERROR" "IP_list_maker function is not working properly"
 	fi
@@ -176,7 +176,7 @@ nmap_installer() {
 
 IP_range_calc() {
 	log_func "DEBUG" "Calculating IPv4 address range"
-# Man måste veta vilka de första 3 oktetterna är i ens IP-adress range.
+	# Man måste veta vilka de första 3 oktetterna är i ens IP-adress range.
 	my_ip=$(ip route get 8.8.8.8 | grep -oP 'src \K[^ ]+') 								# Variabel som sparar IP-nätverket man är på som går ut mot internet. Pingar Google.
 	echo "Din IPv4 adress: $my_ip"
 	oct="${my_ip%${my_ip##*.}}" 														# Tar bart den sista oktetten.
@@ -190,7 +190,7 @@ ping_sweep() {
 	done
 	log_func "INFO" "Auto_Scan.sh has performed the ping-sweep"
 	log_func "INFO" "Auto_Scan.sh has logged responsive IPv4:s in IP-list.txt"
-	wait # Väntar tills alla ping-kommandon är klara innan den går vidare.
+	wait 																				# Väntar tills alla ping-kommandon är klara innan den går vidare.
 	echo ""
 	echo "=================================================="
 	echo ""
@@ -203,7 +203,7 @@ port_scan() {
 	echo "Processing Internet Protocol: $line"
 	nmap -T5 --min-rate 5000 "$line" 													# Använder nmap för att skanna IPv4 TCP port.
 	echo ""
-	done < IP-list.txt # Visar att den ska hämta från IP-list.txt
+	done < IP-list.txt 																	# Visar att den ska hämta från IP-list.txt
 	log_func "INFO" "Port scan has been completed"
 }
 
@@ -211,7 +211,7 @@ port_scan() {
 #						    MAIN
 # ===========================================================
 
-main() { # Här kör koden JIPPIE!!!
+main() { 																				# Här kör koden JIPPIE!!!
   flag_arg "$@"
   log_func "INFO" "SCRIPT HAS BEGUN!!!"
   L0G_maker
