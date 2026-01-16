@@ -9,7 +9,7 @@ Skriptet visar följande information:
 * Din IPv4 address
 * Enheter i samma nätverk och deras IPv4 address
 * TCP portar som är öppna hos enheterna inklusive dig
-> INFO:
+> INFO: (För extra hjälp skriv senare i terminalen --help för extra hjälp om något inte fungerar som det ska.)
 
 > En .txt fil kommer att skapas i samma mapp, den kommer att användas av koden.
 
