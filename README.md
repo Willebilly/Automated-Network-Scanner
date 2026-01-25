@@ -29,7 +29,7 @@ Skriptet kontrollerar automatiskt användarens internet uppkoppling innan progra
 5. Godkänn att det är ok att köra programmet i ditt nuvarande nätverk.
 
 ## Screenshot
-När allt fungerar bör du få följande resultat!
+När allt fungerar bör du få följande resultat.
 
 <img width="637" height="759" alt="Skärmbild 2026-01-09 152831" src="https://github.com/user-attachments/assets/9e027fc6-b91e-4273-996c-1b5ca126eae7" />
 
